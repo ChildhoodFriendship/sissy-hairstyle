@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'sissy-hairstyle' title`, () => {
+  it('should expose the main navigation', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('sissy-hairstyle');
+    expect(app.categories).toEqual(['Tutti', 'Raccolti', 'Mossi', 'Corti']);
   });
 
-  it('should render title', () => {
+  it('should render the hairstyle hero', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, sissy-hairstyle');
+    expect(compiled.querySelector('h1')?.textContent).toContain('La tua forma');
   });
 });
