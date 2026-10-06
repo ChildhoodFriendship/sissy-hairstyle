@@ -1,43 +1,73 @@
+---
+title: Guida operativa per agenti
+created: 2026-10-06
+updated: 2026-10-06
+type: guidance
+tags: [guidance, workflow, security, testing]
+project: sissy-hairstyle
+status: active
+confidence: high
+sources: [SCHEMA.md, current-status.md, package.json, angular.json]
+---
+
 # Guida operativa per agenti
 
-## Orientamento obbligatorio
+## Preflight repository
 
-1. Leggere `SCHEMA.md`, `index.md`, `current-status.md` e le ultime voci di `log.md`.
-2. Eseguire `git status --short --branch` prima di modificare file.
-3. Cercare simboli e usi nel codice; leggere manifest, configurazione e test pertinenti.
-4. Trattare le modifiche già presenti nel working tree come appartenenti all'utente.
+Prima di modificare la repo:
 
-## Regole di modifica
+1. Eseguire `git status`.
+2. Se ci sono modifiche locali non committate, fermarsi e comunicarlo.
+3. Se il working tree è pulito, eseguire `git fetch` e `git pull --ff-only` sul branch corrente.
+4. Se pull fallisce o i branch sono divergenti, mostrare lo stato e attendere; non risolvere autonomamente.
+5. Lavorare su un branch `hermes/<task>`, mai direttamente su `main`.
 
-- Implementare la richiesta con la patch minima coerente; evitare refactor estranei.
-- Preservare Angular standalone, SSR/prerendering, hydration, accessibilità e responsive layout.
-- Usare TypeScript/HTML/CSS nello stile già presente; mantenere copy e interfaccia in italiano.
-- Per lo stato UI locale preferire `signal`; mantenere una sola fonte di verità per filtri e invio form.
-- Non introdurre librerie UI aggiuntive senza necessità documentata.
-- Non inventare endpoint, integrazioni, indirizzi, anni di attività o asset definitivi.
-- Il form contatti è demo: non simulare un invio reale né aggiungere provider senza requisito e contratto verificati.
-- Le URL Unsplash sono provvisorie: sostituirle solo con asset autorizzati/forniti.
-- Animazioni curate ma accessibili; mantenere il percorso `prefers-reduced-motion`.
-- Prima di aggiungere una rotta, servizio o modello, verificare che non esista già un equivalente.
-- Non committare, fare push, resettare il branch o riscrivere la storia senza richiesta esplicita.
-- Non copiare segreti o credenziali nel codice, nella wiki o negli esempi.
+Un'autorizzazione esplicita del maintainer può modificare il blocco del punto 2 solo per quell'operazione. Non committare o pushare senza richiesta esplicita.
 
-## Verifica
+## Orientamento e ambito
 
-Eseguire separatamente, in base alla modifica:
+1. Leggere `SCHEMA.md`, `index.md`, `current-status.md` e le ultime 20–30 righe di `log.md`.
+2. Cercare simboli e usi prima di aprire file estesi.
+3. Leggere manifest, configurazione, sorgente e test pertinenti.
+4. Definire outcome, scope, vincoli e acceptance check prima di modificare.
+5. Trattare il diff preesistente come appartenente all'utente.
+
+Eseguire richieste operative per default, applicando la patch minima. Chiedere chiarimenti solo se l'ambiguità cambia file o comportamento. Per UI distinguere modifiche visuali, behavior-preserving e behavior-changing.
+
+## Regole tecniche
+
+- Preservare Angular standalone, SSR/prerendering, hydration, responsive design e accessibilità.
+- Mantenere copy e interfaccia in italiano.
+- Preferire `signal` per stato UI locale e una sola fonte di verità.
+- Non introdurre librerie UI o provider esterni senza requisito verificato.
+- Il form contatti è demo: non inventare endpoint o persistenza.
+- Le immagini Unsplash sono temporanee; non presentarle come asset proprietari.
+- Mantenere `prefers-reduced-motion`.
+- Usare `camelCase` per codice frontend; preservare nomi esterni solo quando appartengono a un contratto verificato.
+- Esplicitare l'access modifier di metodi e membri quando compatibile con lo stile Angular.
+- Mettere ogni nuovo child component in una sottocartella dedicata.
+- Prima di aggiungere una funzione cercare un equivalente ed evitare due percorsi canonici.
+- Non copiare segreti, credenziali o endpoint privati nella wiki o nel codice.
+
+## Verifica e handoff
+
+Eseguire i controlli pertinenti, separatamente:
 
 ```bash
 npm run test -- --watch=false --browsers=ChromeHeadless
 npm run build
+git diff --check
+git status --short --branch
 ```
 
-Per modifiche visive, eseguire anche `npm start` e una verifica browser reale/cross-device quando disponibile. Un build riuscito non dimostra da solo correttezza visuale o invio del form.
+Per UI, fare anche smoke test browser quando disponibile. Un build riuscito non prova correttezza visuale, rete o invio form.
 
-Riportare solo risultati reali: **Changed**, **Verified**, **Blocked/remaining**. Prima della consegna controllare `git diff --check` e `git status --short --branch`.
+Il report finale contiene solo:
 
-## Manutenzione della wiki
+- **Changed:** file e comportamento modificati;
+- **Verified:** comandi e risultati reali;
+- **Blocked/remaining:** warning, limiti e controlli manuali ancora necessari.
 
-- Aggiornare la pagina pertinente quando cambiano architettura, componenti o stato.
-- Aggiungere ogni nuova pagina a `index.md` e una voce sintetica a `log.md`.
-- Conservare in `current-status.md` solo il quadro corrente; non trasformarlo in diario.
-- Abbassare la confidenza o dichiarare il limite quando manca verifica runtime.
+## Manutenzione wiki
+
+Aggiornare pagina di progetto, modulo, runbook o stato quando cambia conoscenza durevole; aggiornare indice e log; abbassare confidence o aprire una lacuna se la verifica manca. Non inserire conversazioni o diario temporaneo.

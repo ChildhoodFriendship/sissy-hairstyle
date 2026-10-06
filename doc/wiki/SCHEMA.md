@@ -1,41 +1,51 @@
-# Schema della wiki e dell'applicazione
+# Schema della wiki
 
-## Modello documentale
+## Convenzioni
 
-- Pagine Markdown brevi, con titolo, stato, fonti e data di aggiornamento quando il contenuto è soggetto a evoluzione.
-- Usare percorsi relativi al repository per le fonti (`src/...`, `package.json`, comandi npm).
-- `index.md` è l'indice canonico; ogni pagina durevole deve comparire lì.
-- `current-status.md` contiene solo stato e attività aperte; `log.md` è storico sintetico append-only.
-- Non inserire segreti, credenziali, token o endpoint privati.
-- Preferire fatti verificati dal codice e dai comandi eseguiti; indicare esplicitamente ciò che resta non verificato.
+- Nomi file lowercase, con trattini e senza spazi.
+- Ogni pagina contenutistica usa frontmatter YAML e compare in `index.md`.
+- Usare `[[wikilinks]]` quando esistono pagine correlate.
+- Aggiornare `updated` a ogni modifica e aggiungere una voce sintetica a `log.md`.
+- Citare percorsi repository-relative, identificatori, comandi e risultati reali.
+- Non memorizzare segreti, token, password, chiavi, certificati o configurazioni cliente.
+- Tenere le pagine sotto circa 200 righe; separare i deep dive.
 
-## Architettura runtime
+## Frontmatter
 
-```text
-src/index.html
-  └─ main.ts
-       └─ bootstrapApplication(AppComponent, appConfig)
-            ├─ AppComponent (landing, stato UI, filtri, form demo)
-            ├─ Angular Router (routes attualmente vuote)
-            └─ Client hydration + event replay
-
-SSR/prerender:
-main.server.ts → app.config.server.ts → server.ts (Express/CommonEngine)
+```yaml
+---
+title: Titolo pagina
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+type: project | architecture | module | api | decision | workflow | bug | runbook | concept | query | guidance | status
+tags: [project]
+project: sissy-hairstyle
+status: active | superseded | resolved | open | archived
+confidence: high | medium | low
+sources: [percorso/relativo]
+---
 ```
 
-## Dati applicativi
+`confidence` descrive la qualità dell'evidenza della pagina:
 
-| Modello | Forma | Proprietà chiave | Origine |
-|---|---|---|---|
-| Categoria | `string` | `Tutti`, `Raccolti`, `Mossi`, `Corti` | `AppComponent.categories` |
-| Look | oggetto locale | `title`, `category`, `type`, `image`, `className` | `AppComponent.looks` |
-| Stato filtro | signal | categoria attiva | `activeCategory` |
-| Stato form | signal booleano | richiesta inviata in demo | `sent` |
+- `high`: confermata da codice/configurazione e, se rilevante, da comandi riusciti.
+- `medium`: supportata da codice o documentazione, ma runtime, rete o flusso completo non verificati.
+- `low`: inferita, datata, contraddittoria o dipendente da evidenza mancante; indicare come verificarla.
 
-Non esiste ancora un modello backend, una persistenza o un contratto API per il form.
+## Precedenza delle fonti
 
-## Vincoli di rendering
+1. Codice e configurazione correnti, verificati dall'esecuzione.
+2. Output di build, test e runtime.
+3. Documentazione esplicita del progetto.
+4. Wiki esistente e contesto del maintainer.
+5. Inferenza dell'agente, sempre marcata come tale.
 
-- L'app è standalone Angular 19 con SSR/prerendering e hydration.
-- Le interazioni devono restare compatibili con SSR: evitare accessi browser-only durante il rendering iniziale.
-- Le immagini attuali sono URL Unsplash remoti temporanei; non trattarle come asset proprietari definitivi.
+Non inferire endpoint, contratti di deploy, autorizzazioni o comportamenti browser-only dai soli nomi.
+
+## Manutenzione
+
+1. Cercare pagina e simboli correlati prima di scrivere.
+2. Leggere sorgente, configurazione e test pertinenti.
+3. Aggiornare pagina e link utili.
+4. Aggiornare `index.md` e `log.md`.
+5. Documentare verifica e blocchi senza trasformare ipotesi in fatti.

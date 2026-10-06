@@ -1,16 +1,17 @@
-# Log della wiki
+# Log wiki
 
-Storico sintetico; le voci descrivono fatti verificati, non intenzioni.
+Formato append-only: `## [YYYY-MM-DD] azione | oggetto`.
 
-## [2026-10-06] refactor — Migrazione wiki Hermes
+## [2026-10-06] create | Wiki equivalente per Sissy Hairstyle
 
-- Ricostruita la documentazione in `doc/wiki/` con schema compatto: schema, guida agente, stato, indice, log, catalogo componenti e pagina progetto.
-- Estratti dal materiale precedente i vincoli reali: Angular standalone, SSR/prerendering, form demo, asset remoti e identità locale ad Arzergrande.
-- Rimossa la nota temporanea dalla vecchia area wiki.
-- Verifiche repository: `npm run test -- --watch=false --browsers=ChromeHeadless` pass (3 test); `npm run build` pass (1 route prerenderizzata).
+- Separati i vincoli generali della wiki di riferimento dai contenuti specifici del progetto sorgente.
+- Ricostruiti schema, guida agente, token usage, stato, architettura, catalogo componenti, progetto e runbook sul codice corrente.
+- Aggiunti template generici senza nomi o percorsi del progetto di riferimento.
+- Verifiche baseline: test headless pass (3 test), build pass (1 route prerenderizzata).
 
-## Decisioni architetturali correnti
+## Decisioni architetturali
 
-- **ADR-01 — UI senza libreria aggiuntiva:** CSS locale e Angular nativo mantengono bundle e SSR semplici.
-- **ADR-02 — Form non integrato:** il form resta locale finché non esiste un endpoint reale; non si inventa una persistenza.
-- **ADR-03 — Accessibilità del movimento:** le animazioni devono rispettare `prefers-reduced-motion`.
+- **ADR-01 — Angular standalone e SSR:** mantenere il bootstrap standalone, hydration e server rendering già configurati.
+- **ADR-02 — Nessuna UI library aggiuntiva:** usare CSS locale e primitive Angular finché non emerge un requisito verificato.
+- **ADR-03 — Form non integrato:** non inventare un endpoint; il form resta demo fino a un contratto reale.
+- **ADR-04 — Movimento accessibile:** tutte le animazioni devono rispettare `prefers-reduced-motion`.

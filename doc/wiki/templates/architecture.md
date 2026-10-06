@@ -1,7 +1,7 @@
 ---
 title: System architecture
-created: 2026-09-24
-updated: 2026-09-24
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
 type: architecture
 tags: [architecture]
 project: project-slug
@@ -13,26 +13,10 @@ sources: []
 # System architecture
 
 ## Context
-
 ## Components
-| Component | Responsibility | Technology | Links |
-|---|---|---|---|
-| | | | |
-
 ## Runtime flow
-1.
-2.
-3.
-
 ## Data and control boundaries
-
 ## Failure modes
-
 ## Security boundaries
-
 ## Related pages
-- [[project-name]]
-- [[module-name]]
-- [[adr-name]]
-
 ## Evidence
