@@ -1,14 +1,16 @@
-# Log attività
+# Log della wiki
 
-## 2026-09-29
+Storico sintetico; le voci descrivono fatti verificati, non intenzioni.
 
-- Definita una direzione visiva editoriale: fondo caldo, tipografia ad alto contrasto, accento corallo e animazioni morbide.
-- Implementata la landing page responsive con galleria interattiva e form di richiesta informazioni.
-- Scelta una soluzione senza librerie UI aggiuntive per mantenere bundle e SSR semplici.
-- Il form resta intenzionalmente in modalità demo: non è stato inventato alcun endpoint di invio.
+## [2026-10-06] refactor — Migrazione wiki Hermes
 
-## 2026-09-29 — Correzione identità locale
+- Ricostruita la documentazione in `doc/wiki/` con schema compatto: schema, guida agente, stato, indice, log, catalogo componenti e pagina progetto.
+- Estratti dal materiale precedente i vincoli reali: Angular standalone, SSR/prerendering, form demo, asset remoti e identità locale ad Arzergrande.
+- Rimossa la nota temporanea dalla vecchia area wiki.
+- Verifiche repository: `npm run test -- --watch=false --browsers=ChromeHeadless` pass (3 test); `npm run build` pass (1 route prerenderizzata).
 
-- Aggiornati hero e footer per presentare Sissy HairStyle come salone di Arzergrande.
-- Inseriti l’indirizzo pubblico `Via Roma 52` e la dicitura `Si riceve su appuntamento`, senza inventare gli anni di attività.
-- Aggiornati title e meta description HTML con la località.
+## Decisioni architetturali correnti
+
+- **ADR-01 — UI senza libreria aggiuntiva:** CSS locale e Angular nativo mantengono bundle e SSR semplici.
+- **ADR-02 — Form non integrato:** il form resta locale finché non esiste un endpoint reale; non si inventa una persistenza.
+- **ADR-03 — Accessibilità del movimento:** le animazioni devono rispettare `prefers-reduced-motion`.

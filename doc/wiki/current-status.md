@@ -1,14 +1,32 @@
 # Stato corrente
 
-## Milestone completata
+**Snapshot:** 2026-10-06 — stato verificato dal repository e dai comandi eseguiti.
 
-- [x] Sostituita la schermata Angular iniziale con una landing page moderna per Sissy Hairstyle.
-- [x] Aggiunte hero editoriale, galleria filtrabile, sezione metodo, CTA e form contatti.
-- [x] Aggiunte animazioni CSS rispettose di `prefers-reduced-motion`.
-- [x] Aggiornati title e lingua del documento HTML.
+## Completato
 
-## Da completare
+- Landing page editoriale Sissy Hairstyle implementata in Angular standalone.
+- Hero, navigazione ad ancore, galleria filtrabile, metodo, CTA e form contatti presenti.
+- Identità locale: Arzergrande, Via Roma 52, ricevimento su appuntamento.
+- Responsive layout, animazioni CSS e fallback `prefers-reduced-motion` presenti.
+- SSR/prerendering, hydration con event replay e server Express configurati.
 
-- Collegare il form a un provider reale quando sarà disponibile l'endpoint.
-- Sostituire le immagini remote con asset proprietari ottimizzati, se forniti.
-- Eseguire una verifica visuale cross-device con browser reale.
+## Baseline verificata
+
+| Controllo | Risultato |
+|---|---|
+| `npm run test -- --watch=false --browsers=ChromeHeadless` | Pass: 3 test eseguiti |
+| `npm run build` | Pass: bundle browser/server e 1 route prerenderizzata |
+
+## Aperto / non verificato
+
+- Il form mostra un messaggio locale e non invia dati: manca un endpoint/provider reale.
+- Le immagini sono remote da Unsplash e devono essere sostituite con asset proprietari ottimizzati quando forniti.
+- Manca una verifica visuale manuale cross-device.
+- Le route Angular sono attualmente vuote: la landing è il componente root, senza navigazione applicativa dinamica.
+- Il server SSR usa la porta `PORT` oppure `4000`; non sono documentate procedure di deploy/rollback.
+
+## Dipendenze e limiti critici
+
+- Angular `^19.2.0`, Angular CLI `^19.2.27`, TypeScript `~5.7.2`, Express `^4.18.2`.
+- Le font Google e le immagini dipendono dalla rete in runtime/browser.
+- Non esiste backend, persistenza, autenticazione o servizio contatti nel repository.

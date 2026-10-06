@@ -1,15 +1,19 @@
-# Sissy Hairstyle — Wiki
+# Wiki Sissy Hairstyle
 
-## Scopo
+Mappa compatta della documentazione corrente. Le fonti applicative sono sempre più autorevoli della wiki quando divergono.
 
-Sito vetrina editoriale per presentare look, acconciature e consulenze di Sissy Hairstyle.
+## Orientamento
 
-## Stato
+- [SCHEMA](SCHEMA.md) — modello documentale, architettura runtime e modelli dati locali.
+- [Guida agente](agent-guide.md) — regole operative, convenzioni e verifiche.
+- [Stato corrente](current-status.md) — milestone, baseline verificata e punti aperti.
+- [Log](log.md) — modifiche e decisioni architetturali sintetiche.
 
-Vedi [current-status.md](current-status.md) per il riepilogo verificato e [log.md](log.md) per le decisioni operative.
+## Progetto e componenti
 
-## Vincoli
+- [Sissy Hairstyle](projects/sissy-hairstyle.md) — scopo, configurazione e integrazioni.
+- [Catalogo componenti](modules/component-catalog.md) — componenti, utility, input/output e vincoli.
 
-- Angular standalone con SSR/prerendering già configurato.
-- CSS standard, senza dipendenze UI aggiuntive.
-- La galleria e il form sono interazioni client-side leggere e compatibili con SSR.
+## Aree predisposte
+
+- [Bug](bugs/.gitkeep) — cartella vuota per diagnosi riproducibili e verificate.
